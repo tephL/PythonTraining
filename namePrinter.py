@@ -1,3 +1,3 @@
-name = input("Who is u")
+name = input("Who is u ")
 
-print(f"nigga {name}")
+print(f"Greetings, beloved {name}")
