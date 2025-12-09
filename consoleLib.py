@@ -33,6 +33,6 @@ while chc:
     elif chc=="0":
         chc = False
     else:
-        print("Invalid")-0
+        print("Invalid")
         
     print()
