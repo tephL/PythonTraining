@@ -27,11 +27,11 @@ def validator(username, password):
         print("\nInvalid. Try again.")
 
 def menupage(username):
-    print(f"Welcome, {username}!")
+    print(f"\nWelcome, {username}!")
 
     while True:
-        print(f"\n{div}\n{'Menu':>17}\n{div}")
-        print(f"1. Withdraw\n2. Deposit\n3. Balance\n0. Log out\n{div}")
+        print(f"{div}\n{'Menu':>17}\n{div}")
+        print(f"1. Balance\n2. Withdraw\n3. Deposit\n0. Log out\n{div}")
         chc = int(input("> "))
         match chc:
             case 1:
