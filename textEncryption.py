@@ -7,15 +7,16 @@ keys = list(keys)
 
 values = list(keys.copy())
 random.shuffle(values)
-i = 0
-o=0
 x = 0
 encrypted = None           
 div = "—"*45
 
 while True:
-    chc = int(input("1. View Dictionary\n2. View Encrypted Text\n3. Encrypt Text\n0. Exit\nChoice: "))
-    print("\n")
+    print("—"*20)
+    print(f"{'Menu':^20}")    
+    print("—"*20)
+    chc = int(input("1. View Dictionary\n2. Encrypt Text\n3. Decrypt Text\n0. Exit\n" + "—"*20 + "\n> "))
+    print()
     
     if chc == 1:
         print(div)
@@ -28,13 +29,10 @@ while True:
                 print()
                 x = 0
         print(f"\n{div}")
+        
     elif chc == 2:
-        if encrypted is None:
-            print("Have not encrypted a text yet")
-        else:
-            for enc in encrypted:
-                print(enc, end="")
-    elif chc == 3:
+        o=0
+        i=0
         word = input("Enter: ")
         encrypted = list(word)
 
@@ -44,6 +42,26 @@ while True:
                     encrypted[o] = values[i]
                     break
             o+=1
+            
+        print("Encrypted: ", end="")
+        for enc in encrypted:
+                print(enc, end="")
+    elif chc == 3:
+        o=0
+        i=0
+        encrypt = input("Encrypted: ")
+        decrypted = list(encrypt)
+        
+        for ch in encrypt:
+            for i in range(0, len(values), 1):
+                if ch == values[i]:
+                    decrypted[o] = keys[i]
+                    break
+            o+=1
+        print(f"Decrypted message is: ", end="")
+        for d in decrypted:
+            print(d, end="")
+        print()
     elif chc == 0:
         print("Thanks")
         break
