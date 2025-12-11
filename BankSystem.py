@@ -14,20 +14,21 @@ class Bank:
             print(f"{user.username:<24} | {user.password:>5}")
         print(div2)
 
-    #client funcs
-    def deposit(self, amount):
-        self.balance += amount
 
-    def withdraw(self, amount):
-        self.balance -= amount
+class User:
+    balance = 100
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 
 
+# for future use once its all done
+'''
 div = "=" * 30
 div2 = "-" * 50
 Crinkles = Bank("Crinkles")
 
-# for future use once its all done
-''''
 def main():
 
     while True:
@@ -49,45 +50,7 @@ def main():
             case _:
                 print("Invalid. Try again.")
         print()
-'''
-
-
-
-'''
-class User:
-    balance = 100
-
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-        users = []
-
-        else:
-            print("\nInvalid. Try again.")
-'''
-
-
-def adminpage():
-    while True:
-        print(f"{div}\nBank Admin Page\n{div}")
-        chc = int(input(f"1. Add User\n2. List of Users\n3. Deposit\n4. Withdraw\n{div}\n> "))
-
-        print()
-        match chc:
-            case 1:
-                username = input("Username: ")
-                password = input("Password: ")
-                Crinkles.addUser(username, password)
-            case 2:
-                Crinkles.userList()
-            case 3:
-                Crinkles.deposit(100)
-            case 4:
-                Crinkles.withdraw(100)
-            case _:
-                print("invalid")
-        print()
-
+        
 
 def menupage(username):
     print(f"\nWelcome, {username}!")
@@ -113,7 +76,38 @@ def menupage(username):
 
     def balance():
         print
+'''
+
+def adminpage():
+    Crinkles.addUser("teph", 1234)
+
+    while True:
+        print(f"{div}\nBank Admin Page\n{div}")
+        chc = int(input(f"1. Add User\n2. List of Users\n3. Deposit\n4. Withdraw\n5. Balance\n{div}\n> "))
+
+        print()
+        match chc:
+            case 1:
+                username = input("Username: ")
+                password = input("Password: ")
+                Crinkles.addUser(username, password)
+            case 2:
+                Crinkles.userList()
+            case 3:
+                Crinkles.deposit(100)
+            case 4:
+                Crinkles.withdraw(100)
+            case 5:
+                Crinkles.balance()
+            case _:
+                print("invalid")
+        print()
+
+
+def test():
+    print(User.balance)
+    print(Crinkles.balance())
 
 
 if __name__ == "__main__":
-    adminpage()
+    test()
