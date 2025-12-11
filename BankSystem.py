@@ -14,6 +14,17 @@ class Bank:
             print(f"{user.username:<24} | {user.password:>5}")
         print(div2)
 
+    def balance(self):
+        for user in self.users:
+            print(f"User: {user.username} | Balance: {user.balance}")
+
+    def deposit(self, username, amt):
+        for user in self.users:
+            if user.username == username:
+                user.balance += amt
+                notFound = False
+        print("not found" if notFound else "found")
+
 
 class User:
     balance = 100
@@ -22,13 +33,12 @@ class User:
         self.username = username
         self.password = password
 
+Crinkles = Bank("Crinkles")
+div = "=" * 30
+div2 = "-" * 50
 
 # for future use once its all done
 '''
-div = "=" * 30
-div2 = "-" * 50
-Crinkles = Bank("Crinkles")
-
 def main():
 
     while True:
@@ -94,7 +104,7 @@ def adminpage():
             case 2:
                 Crinkles.userList()
             case 3:
-                Crinkles.deposit(100)
+                Crinkles.deposit("teph",100)
             case 4:
                 Crinkles.withdraw(100)
             case 5:
@@ -110,4 +120,4 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
+    adminpage()
