@@ -12,19 +12,32 @@ def main():
             case 1:
                 username = input("Username: ")
                 password = input("Password: ")
-                validator(username, password)
+                User.validator(username, password)
             case 2:
                 signupPage()
             case _:
                 print("Invalid. Try again.")
         print()
 
+class User:
+    balance = 100
 
-def validator(username, password):
-    if username == "tephL" and password == "1":
-        menupage(username)
-    else:
-        print("\nInvalid. Try again.")
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def addBalance(self, amount):
+        self.balance += amount
+
+    def removeBalance(self, amount):
+        self.balance -= amount
+
+    def validator(username, password):
+        if username == "1" and password == "1":
+            menupage(username)
+
+        else:
+            print("\nInvalid. Try again.")
 
 def menupage(username):
     print(f"\nWelcome, {username}!")
@@ -35,16 +48,22 @@ def menupage(username):
         chc = int(input("> "))
         match chc:
             case 1:
-                print(1)
+                print(f"Your balance is: {User.balance}")
             case 2:
-                print(2)
+                amt = int(input("Withdraw: "))
+                User.removeBalance(amt)
             case 3:
-                print(3)
+                amt = int(input("Deposit: "))
+                User.addBalance( amt)
             case 0:
                 print("Bye")
                 break
             case _:
                 print("Invalid. Try again.")
+            
+    def balance():
+        print
+
 
 if __name__ == "__main__":
     main()
