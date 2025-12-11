@@ -1,11 +1,40 @@
-#Crinkles Banks
-div = "="*30
+# Crinkles Banks
+class Bank:
+    def __init__(self, bankname):
+        self.bankname = bankname
+        self.users = []
+
+    #admin funcs
+    def addUser(self, username, password):
+        self.users.append(User(username, password))
+
+    def userList(self):
+        print(f"Username" + f"{'| Password':>27}\n{div2}")
+        for user in self.users:
+            print(f"{user.username:<24} | {user.password:>5}")
+        print(div2)
+
+    #client funcs
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        self.balance -= amount
+
+
+div = "=" * 30
+div2 = "-" * 50
+Crinkles = Bank("Crinkles")
+
+# for future use once its all done
+''''
 def main():
+
     while True:
         print(div)
         print("Welcome to the Crinkles Banks")
         print(div)
-        chc = int(input(f"1. Sign in\n2. Sign Up\n{div}\n> "))
+        chc = int(input(f"1. Sign in\n2. Sign Up\n3. Admin\n{div}\n> "))
         print()
 
         match chc:
@@ -15,29 +44,50 @@ def main():
                 User.validator(username, password)
             case 2:
                 signupPage()
+            case 3:
+                adminpage()
             case _:
                 print("Invalid. Try again.")
         print()
+'''
 
+
+
+'''
 class User:
     balance = 100
 
     def __init__(self, username, password):
         self.username = username
         self.password = password
-
-    def addBalance(self, amount):
-        self.balance += amount
-
-    def removeBalance(self, amount):
-        self.balance -= amount
-
-    def validator(username, password):
-        if username == "1" and password == "1":
-            menupage(username)
+        users = []
 
         else:
             print("\nInvalid. Try again.")
+'''
+
+
+def adminpage():
+    while True:
+        print(f"{div}\nBank Admin Page\n{div}")
+        chc = int(input(f"1. Add User\n2. List of Users\n3. Deposit\n4. Withdraw\n{div}\n> "))
+
+        print()
+        match chc:
+            case 1:
+                username = input("Username: ")
+                password = input("Password: ")
+                Crinkles.addUser(username, password)
+            case 2:
+                Crinkles.userList()
+            case 3:
+                Crinkles.deposit(100)
+            case 4:
+                Crinkles.withdraw(100)
+            case _:
+                print("invalid")
+        print()
+
 
 def menupage(username):
     print(f"\nWelcome, {username}!")
@@ -54,16 +104,16 @@ def menupage(username):
                 User.removeBalance(amt)
             case 3:
                 amt = int(input("Deposit: "))
-                User.addBalance( amt)
+                User.addBalance(amt)
             case 0:
                 print("Bye")
                 break
             case _:
                 print("Invalid. Try again.")
-            
+
     def balance():
         print
 
 
 if __name__ == "__main__":
-    main()
+    adminpage()
