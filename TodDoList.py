@@ -21,22 +21,37 @@ class List:
     def viewTasks(self):
         if self.tasks:
             print(f"{div}|\n{'Status':<10}| {'Tasks':<18}|\n{div}|")
+            ctr = 1
             for task in self.tasks:
-                ctr = 1
-                print(f"{task.getStatus():<10}| {task.task:<18}|")
+                print(f"{task.getStatus():<10}| {ctr}. {task.task:<15}|")
                 ctr += 1
             print(f"{div}|")
         else:
             print("none")
-
+    
     def addTask(self, task):
         self.tasks.append(Task(task, False))
+        
+    def deleteTask(self, ctr):
+        if self.tasks:
+            self.tasks.pop(ctr-1)
+        else:
+            print("empty")
+            
+    def editTask(self, ctr2, newTask):
+        if self.tasks:
+            ctr = 0
+            for task in self.tasks:
+                if ctr == ctr2-1:
+                    task.task = newTask
+                    break;
+                ctr += 1
 
 
 def main():
     todo = List("To do List")
     while True:
-        print("1. View\n2. Add\n3. Delete\n0. Quit")
+        print("1. View\n2. Add\n3. Delete\n4. Update\n0. Quit")
         chc = int(input("Enter your choice: "))
 
         print()
@@ -46,7 +61,9 @@ def main():
             case 2:
                 todo.addTask(input("Task: "))
             case 3:
-                todo.deleteTask(input("Task: "))
+                todo.deleteTask(int(input("Task: ")))
+            case 4:
+                todo.editTask(int(input("Num: ")), input("Task: "))
             case 0:
                 quit()
             case _:
