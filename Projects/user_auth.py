@@ -2,10 +2,10 @@
 import time as t
 
 class Site:
-    userlist = {"tephL":"1228"}
     
     def __init__(self, name):
         self.name = name
+        self.userlist = {"tephL":"1228"}
         
     def sessiontime(func):
         def wrapper(*args, **kwargs):
@@ -27,14 +27,35 @@ class Site:
                 print("err: noexist")
         return wrapper
         
+    def settings(self):
+        while True:
+            chc = int(input("1. Change Password\n0. Exit"))
+            
+            print()
+            match chc:
+                case 1:
+                    newpass = input("New password: ")
+                    self.userlist.update({self.current_user:newpass})
+                    print(f"New pass: {self.userlist.get(self.current_user)}")
+                case 0:
+                    return
+            print()
+        
     @auth
     @sessiontime
     def dashboard(self, user, password):
+        self.current_user = user
         print(f"Welcome! {user}")
         while True:
-            chc = int(input("0. Logout\n> "))
-            if chc == 0:
-                return
+            chc = int(input("1. Settings\n0. Logout\n> "))
+            
+            print()
+            match chc:
+                case 1:
+                    self.settings()
+                case 0:
+                    return
+            print()
     
     def register(self, user, password):
         formatteduser = self.formatter(user)
