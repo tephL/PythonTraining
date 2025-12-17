@@ -1,91 +1,58 @@
 # To do list
+import sqlite3
+
+conn = sqlite3.connect("todolist.db")
+cursor = conn.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    taskname TEXT UNIQUE NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_done INTEGER DEFAULT 0
+)
+""")
+conn.commit()
 
 div = "-"*30
 
-class Task:
-    status = False
-    
-    def __init__(self, task):
-        self.task = task
-
-    def getStatus(self):
-        if self.status == False:
-            return "X"
-        else:
-            return "Y"
-
-class List:
+class todolist:
     def __init__(self, name):
         self.name = name
-        self.tasks = []
 
     def viewTasks(self):
-        if self.tasks:
-            print(f"{div}|\n{'Status':<10}| {'Tasks':<18}|\n{div}|")
-            ctr = 1
-            for task in self.tasks:
-                print(f"{task.getStatus():<10}| {ctr}. {task.task:<15}|")
-                ctr += 1
-            print(f"{div}|")
-        else:
-            print("none")
+        cursor.execute("SELECT id, taskname, created_at, is_done FROM tasks")
+        print(f"{'ID':<3}| Task{'|':>18} {'Date':<19} | ")
+        for row in cursor.fetchall():
+            id = row[0]
+            taskname = row[1]
+            created_at = row[2]
+            is_done = row[3]
+            print(f"{id:<3}| {taskname:<20} | {created_at} | {is_done}")
     
     def addTask(self, task):
-        self.tasks.append(Task(task))
+        cursor.execute("INSERT INTO tasks (taskname) VALUES (?)", (task,))
+        conn.commit()
         
-    def deleteTask(self, ctr):
-        if self.tasks:
-            self.tasks.pop(ctr-1)
-        else:
-            print("empty")
+    def deleteTask(self, id):
+        cursor.execute("DELETE FROM tasks WHERE id = ?", (id,))
             
     def editTask(self, ctr2, newTask):
-        if self.tasks:
-            ctr = 0
-            for task in self.tasks:
-                if ctr == ctr2-1:
-                    task.task = newTask
-                    break;
-                ctr += 1
+        pass
                 
-    def taskDone(self, ctr2):
-        if self.tasks:
-            ctr = 0
-            for task in self.tasks:
-                if ctr == ctr2-1:
-                    task.status = True
-                    break;
-                ctr += 1
+    def taskDone(self, id):
+        cursor.execute("UPDATE tasks SET is_done = 1 WHERE id = ?", (id,))
+        conn.commit()
                 
-    def taskUndone(self, ctr2):
-        if self.tasks:
-            ctr = 0
-            for task in self.tasks:
-                if ctr == ctr2-1:
-                    task.status = False
-                    break;
-                ctr += 1
+    def taskUndone(self, id):
+        cursor.execute("UPDATE tasks SET is_done = 0 WHERE id = ?", (id,))
+        conn.commit()
                 
     def switchNum(self, switch1, switch2):
-        if self.tasks:
-            ctr = 0
-            for task in self.tasks:
-                if ctr == switch1-1:
-                    ctr=0
-                    for task2 in self.tasks:
-                        if ctr == switch2-1:
-                            holder = task.task
-                            holderstatus = task.status
-                            task.task = task2.task
-                            task.status = task2.status
-                            task2.task = holder
-                            task2.status = holderstatus
-                            break;                            
-                    break;
-                ctr += 1
+        pass
 
 def main():
-    todo = List("To do List")
+    todo = todolist("To do List")
     while True:
         print("1. View\n2. Add\n3. Delete\n4. Update\n5. Done")
         print("6. Undone\n7. Switch\n0. Quit")
