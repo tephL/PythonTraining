@@ -28,13 +28,24 @@ class Site:
                 return
     
     def register(self, user):
-        self.userlist.append(user)
-        print(f"successfully created {user}")
+        formatteduser = self.formatter(user)
+        self.userlist.append(formatteduser)
+        print(f"successfully created {formatteduser}")
         return
         
-    @staticmethod    
-    def formatter(*args, **kwargs):
-        pass
+    #@staticmethod    
+    def formatter(self, user):
+        formatteduser = user.lower()
+        x = 0
+        
+        while formatteduser in self.userlist:
+            reformatteduser = formatteduser #retake original word without concatenation
+            reformatteduser += str(x)         
+            if reformatteduser not in self.userlist:       
+                return reformatteduser
+                break
+            x+=1
+        return formatteduser
         
 
 def main():
