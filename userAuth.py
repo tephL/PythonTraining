@@ -1,4 +1,5 @@
 #simple login auth
+import time as t
 
 class Site:
     userlist = ["tephL"]
@@ -9,8 +10,11 @@ class Site:
     def auth(func):
         def wrapper(self, user, *args, **kwargs):
             if user in self.userlist:
-                print("start")
+                startsesh = t.time()
                 func(self, user, *args, **kwargs)
+                endsesh = t.time()
+                seshtime = round(endsesh - startsesh)
+                print(f"sesh: {seshtime}s" if seshtime<60 else f"sesh: {round(seshtime/60)}min")
             else: 
                 print("err: noexist")
         return wrapper
@@ -19,7 +23,7 @@ class Site:
     def dashboard(self, user):
         print(f"Welcome! {user}")
         while True:
-            chc = int(input("0. Logout"))
+            chc = int(input("0. Logout\n> "))
             if chc == 0:
                 return
     
