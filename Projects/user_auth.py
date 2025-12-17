@@ -7,19 +7,25 @@ class Site:
     def __init__(self, name):
         self.name = name
         
+    def sessiontime(func):
+        def wrapper(*args, **kwargs):
+            startsesh = t.time()
+            func(*args, **kwargs)
+            endsesh = t.time()
+            seshtime = round(endsesh - startsesh)
+            print(f"sesh: {seshtime}s" if seshtime<60 else f"sesh: {round(seshtime/60)}min")
+        return wrapper
+        
     def auth(func):
         def wrapper(self, user, *args, **kwargs):
             if user in self.userlist:
-                startsesh = t.time()
                 func(self, user, *args, **kwargs)
-                endsesh = t.time()
-                seshtime = round(endsesh - startsesh)
-                print(f"sesh: {seshtime}s" if seshtime<60 else f"sesh: {round(seshtime/60)}min")
             else: 
                 print("err: noexist")
         return wrapper
         
     @auth
+    @sessiontime
     def dashboard(self, user):
         print(f"Welcome! {user}")
         while True:
@@ -33,10 +39,9 @@ class Site:
         print(f"successfully created {formatteduser}")
         return
         
-    #@staticmethod    
     def formatter(self, user):
         formatteduser = user.lower()
-        x = 0
+        x = 1
         
         while formatteduser in self.userlist:
             reformatteduser = formatteduser #retake original word without concatenation
