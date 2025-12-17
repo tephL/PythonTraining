@@ -2,7 +2,7 @@
 import time as t
 
 class Site:
-    userlist = ["tephL"]
+    userlist = {"tephL":"1228"}
     
     def __init__(self, name):
         self.name = name
@@ -17,25 +17,25 @@ class Site:
         return wrapper
         
     def auth(func):
-        def wrapper(self, user, *args, **kwargs):
-            if user in self.userlist:
-                func(self, user, *args, **kwargs)
+        def wrapper(self, user, password, *args, **kwargs):
+            if user in self.userlist.keys() and self.userlist.get(user) == password:
+                func(self, user, password, *args, **kwargs)
             else: 
                 print("err: noexist")
         return wrapper
         
     @auth
     @sessiontime
-    def dashboard(self, user):
+    def dashboard(self, user, password):
         print(f"Welcome! {user}")
         while True:
             chc = int(input("0. Logout\n> "))
             if chc == 0:
                 return
     
-    def register(self, user):
+    def register(self, user, password):
         formatteduser = self.formatter(user)
-        self.userlist.append(formatteduser)
+        self.userlist[formatteduser] = password
         print(f"successfully created {formatteduser}")
         return
         
@@ -61,9 +61,9 @@ def main():
         print()
         match chc:
             case 1:
-                s.dashboard(input("User: "))
+                s.dashboard(input("User: "), input("Password: "))
             case 2:
-                s.register(input("User: "))
+                s.register(input("User: "), input("Set password: "))
             case 0:
                 print("000")
                 break
