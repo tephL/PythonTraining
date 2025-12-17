@@ -18,8 +18,11 @@ class Site:
         
     def auth(func):
         def wrapper(self, user, password, *args, **kwargs):
-            if user in self.userlist.keys() and self.userlist.get(user) == password:
-                func(self, user, password, *args, **kwargs)
+            if user in self.userlist.keys():
+                if self.userlist.get(user) == password:
+                    func(self, user, password, *args, **kwargs)
+                else:
+                    print("err: xpass")
             else: 
                 print("err: noexist")
         return wrapper
