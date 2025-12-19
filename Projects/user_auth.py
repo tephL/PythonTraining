@@ -12,10 +12,19 @@ class Site:
             startsesh = t.time()
             func(*args, **kwargs)
             endsesh = t.time()
-            seshtime = round(endsesh - startsesh)
-            print(f"sesh: {seshtime}s" if seshtime<60 else f"sesh: {round(seshtime/60)}min")
+            seshtime = endsesh - startsesh
+            print(f"sesh: {seshtime:.2f}s" if seshtime<60 else f"sesh: {(seshtime/60):.2f}min")
         return wrapper
         
+    def sessiontime2(func):
+        def wrapper(*args, **kwargs):
+            start = t.perf_counter()
+            func(*args, **kwargs)
+            end = t.perf_counter()
+            time = start - end
+            print(f"sess: {time:.2f}" if time < 60 else f"sess{time:.2f}")
+        return wrapper
+    
     def auth(func):
         def wrapper(self, user, password, *args, **kwargs):
             if user in self.userlist.keys():
@@ -42,6 +51,7 @@ class Site:
             print()
         
     @auth
+    @sessiontime2
     @sessiontime
     def dashboard(self, user, password):
         self.current_user = user
