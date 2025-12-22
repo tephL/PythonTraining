@@ -11,7 +11,7 @@ class slot_machine:
         return self
     
     def __next__(self):
-        if self.count > self.rows:
+        if self.count < self.rows:
             self.count += 1
             return random.randint(1, 6)
         else:
@@ -20,4 +20,4 @@ class slot_machine:
 results = slot_machine(3)
 
 for res in results:
-    print(res)
+    print(res, end = "| ")
