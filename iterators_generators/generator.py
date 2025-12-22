@@ -1,21 +1,21 @@
-import time as t
+# Generator
+## using yield keyword instead of return
+## pause - return process
 
-def count_to(n): # 10.69s
+def count_to(n): # generator
     ctr = 1
     while ctr <= n:
         yield ctr
         ctr += 1
         
-def count_to2(n): # 10.98s
+def count_to2(n): # normal counter
     ctr = 1
     numbers = []
     while ctr <= n:
         numbers.append(ctr)
         ctr += 1
     return numbers
+    
 
-start = t.time()
 for x in count_to(1000000):
     pass
-end = t.time()
-print(end - start)
